@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjxc2egp4xgqt"]
+
+[ext_resource type="Script" uid="uid://bn44sop7eud4i" path="res://scripts/controllers/sword_controller.gd" id="1_wtl7x"]
+
+[node name="SwordController" type="Node"]
+script = ExtResource("1_wtl7x")
+
+[node name="SwordReadyTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="SwordReadyTimer" to="." method="_on_sword_ready_timer_timeout"]

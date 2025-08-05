@@ -1,3 +1,55 @@
-[gd_scene format=3 uid="uid://c1msa16012y88"]
+[gd_scene load_steps=9 format=3 uid="uid://c1msa16012y88"]
+
+[ext_resource type="PackedScene" uid="uid://beqikds1d2rax" path="res://scenes/player.tscn" id="1_uwrxv"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8cj0n"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_uwrxv"]
+sky_material = SubResource("ProceduralSkyMaterial_8cj0n")
+
+[sub_resource type="Environment" id="Environment_yqjtg"]
+background_mode = 2
+sky = SubResource("Sky_uwrxv")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_yqjtg"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_lnu2h"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lbhrr"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_uwrxv"]
+points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
 
 [node name="Game" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_yqjtg")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(21.612, 0, 0, 0, 16.9295, 0, 0, 0, 24.1567, 0, 0, 0)
+mesh = SubResource("PlaneMesh_yqjtg")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_lnu2h")
+
+[node name="Player" parent="." instance=ExtResource("1_uwrxv")]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(5.99426, 0, 0, 0, 5.99426, 0, 0, 0, 5.99426, -8.75823, 0, -9.13382)
+mesh = SubResource("BoxMesh_lbhrr")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_uwrxv")
